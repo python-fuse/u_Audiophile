@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
+/* My custom colors for the brand */
+/* #D87D4A */
+/* #fbaf85 */
+/* #101010 */
+/* #F1F1F1 */
+/* #FAFAFA */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* My custom colors for the brand */
+  /* use reasonable names */
+  --color-primary: #d87d4a;
+  --color-secondary: #fbaf85;
+  --color-dark: #101010;
+  --color-light: #f1f1f1;
+  --color-lighter: #fafafa;
 }
 
 @theme inline {
