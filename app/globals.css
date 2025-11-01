@@ -11,6 +11,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  --color-error: #cd2c2c;
+
   --color-primary: #d87d4a;
   --color-secondary: #fbaf85;
   --color-dark: #101010;
