@@ -1,23 +1,8 @@
 @import "tailwindcss";
 
-/* My custom colors for the brand */
-/* #D87D4A */
-/* #fbaf85 */
-/* #101010 */
-/* #F1F1F1 */
-/* #FAFAFA */
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
-
-  /* My custom colors for the brand */
-  /* use reasonable names */
-  --color-primary: #d87d4a;
-  --color-secondary: #fbaf85;
-  --color-dark: #101010;
-  --color-light: #f1f1f1;
-  --color-lighter: #fafafa;
 }
 
 @theme inline {
@@ -25,17 +10,39 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary: #d87d4a;
+  --color-secondary: #fbaf85;
+  --color-dark: #101010;
+  --color-light: #f1f1f1;
+  --color-lighter: #fafafa;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  @apply cursor-pointer uppercase font-bold;
+}
+
+.primary {
+  @apply bg-primary text-white  hover:bg-secondary;
+}
+
+button.outlined {
+  @apply bg-white border border-black text-black hover:text-white hover:bg-black;
+}
+
+button.text-icon {
+  @apply w-[57.32px] h-[18px] text-[13px] flex justify-between items-center text-black/50 hover:text-primary;
 }
