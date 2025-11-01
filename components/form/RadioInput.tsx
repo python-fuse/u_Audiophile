@@ -24,7 +24,7 @@ const RadioInput: React.FC<RadioInputProps> = ({
         className="accent-primary"
       />
 
-      <label htmlFor={id} className=" text-black font-bold text-[14px] ml-3">
+      <label htmlFor={id} className=" text-black font-bold text-[14px] ml-4">
         {label}
       </label>
     </div>

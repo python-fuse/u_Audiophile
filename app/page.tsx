@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/button";
+import NumberInput from "@/components/form/NumberInput";
 import RadioInput from "@/components/form/RadioInput";
 import TextField from "@/components/form/TextField";
 
@@ -29,6 +30,7 @@ const page = () => {
           label="Option 1"
           onSelect={() => {}}
         />
+        <NumberInput value={2} onChange={() => {}} min={1} max={5} />
       </div>
     </>
   );
