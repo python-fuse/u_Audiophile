@@ -6,27 +6,43 @@ import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
 import Button from "@/components/button";
 
-// Earphones data from db.json
-const earphones = [
+// Speakers data from db.json
+const speakers = [
   {
-    id: 1,
-    slug: "yx1-earphones",
-    name: "YX1 Wireless Earphones",
+    id: 6,
+    slug: "zx9-speaker",
+    name: "ZX9 Speaker",
     categoryImage: {
       mobile:
-        "/assets/product-yx1-earphones/mobile/image-category-page-preview.jpg",
+        "/assets/product-zx9-speaker/mobile/image-category-page-preview.jpg",
       tablet:
-        "/assets/product-yx1-earphones/tablet/image-category-page-preview.jpg",
+        "/assets/product-zx9-speaker/tablet/image-category-page-preview.jpg",
       desktop:
-        "/assets/product-yx1-earphones/desktop/image-category-page-preview.jpg",
+        "/assets/product-zx9-speaker/desktop/image-category-page-preview.jpg",
     },
     new: true,
     description:
-      "Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.",
+      "Upgrade your sound system with the all new ZX9 active speaker. It's a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
+  },
+  {
+    id: 5,
+    slug: "zx7-speaker",
+    name: "ZX7 Speaker",
+    categoryImage: {
+      mobile:
+        "/assets/product-zx7-speaker/mobile/image-category-page-preview.jpg",
+      tablet:
+        "/assets/product-zx7-speaker/tablet/image-category-page-preview.jpg",
+      desktop:
+        "/assets/product-zx7-speaker/desktop/image-category-page-preview.jpg",
+    },
+    new: false,
+    description:
+      "Stream high quality sound wirelessly with minimal to no loss. The ZX7 speaker uses high-end audiophile components that represents the top of the line powered speakers for home or studio use.",
   },
 ];
 
-const EarphonesPage = () => {
+const SpeakersPage = () => {
   return (
     <div>
       {/* Navigation */}
@@ -34,13 +50,13 @@ const EarphonesPage = () => {
 
       {/* Category Hero */}
       <section className="bg-dark h-48 md:h-[246px] flex items-center justify-center">
-        <h2 className="text-white">EARPHONES</h2>
+        <h2 className="text-white">SPEAKERS</h2>
       </section>
 
       {/* Product List */}
       <section className="container-p py-16 md:py-[120px] lg:py-40">
         <div className="flex flex-col gap-[120px] md:gap-[120px] lg:gap-40">
-          {earphones.map((product, index) => (
+          {speakers.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -65,7 +81,7 @@ const EarphonesPage = () => {
 };
 
 interface ProductCardProps {
-  product: (typeof earphones)[0];
+  product: (typeof speakers)[0];
   reverse: boolean;
 }
 
@@ -109,7 +125,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, reverse }) => {
         <p className="text-black/50 mb-6 md:mb-8 max-w-[572px]">
           {product.description}
         </p>
-        <Link href={`/earphones/${product.slug}`}>
+        <Link href={`/speakers/${product.slug}`}>
           <Button>See Product</Button>
         </Link>
       </div>
@@ -117,4 +133,4 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, reverse }) => {
   );
 };
 
-export default EarphonesPage;
+export default SpeakersPage;
