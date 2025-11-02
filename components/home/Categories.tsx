@@ -49,7 +49,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({
 }) => {
   return (
     <div
-      className={`${styles["cat-card"]} md:flex-1 w-full md:w-auto h-[350px] md:h-[284px] flex flex-col  md:justify-center items-center gap-y-4`}
+      className={`${styles["cat-card"]} md:flex-1 w-full md:min-w-[223px] lg:min-w-[350px] md:w-auto h-[217px] md:h-[204px] flex flex-col justify-end items-center gap-y-4 pb-6`}
     >
       <Image src={imageUrl} alt={title} width={122.95} height={160} />
       <h6>{title}</h6>

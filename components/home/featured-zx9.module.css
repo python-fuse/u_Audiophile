@@ -1,0 +1,73 @@
+.featured {
+  margin-top: 120px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .featured {
+    margin-top: 96px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured {
+    margin-top: 168px;
+    margin-bottom: 48px;
+  }
+}
+
+.container {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Pattern circles background */
+.pattern {
+  position: absolute;
+  width: 944px;
+  height: 944px;
+  background-image: url("/assets/home/desktop/pattern-circles.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  z-index: 0;
+  opacity: 0.15;
+}
+
+@media (max-width: 767px) {
+  .pattern {
+    width: 558px;
+    height: 558px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 172px;
+  height: 207px;
+}
+
+@media (min-width: 768px) {
+  .imageWrapper {
+    width: 197px;
+    height: 237px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .imageWrapper {
+    width: 410px;
+    height: 493px;
+  }
+}
+
+.speakerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
