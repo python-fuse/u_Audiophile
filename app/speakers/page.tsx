@@ -5,44 +5,11 @@ import Footer from "@/components/shared/Footer";
 import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
 import Button from "@/components/button";
-
-// Speakers data from db.json
-const speakers = [
-  {
-    id: 6,
-    slug: "zx9-speaker",
-    name: "ZX9 Speaker",
-    categoryImage: {
-      mobile:
-        "/assets/product-zx9-speaker/mobile/image-category-page-preview.jpg",
-      tablet:
-        "/assets/product-zx9-speaker/tablet/image-category-page-preview.jpg",
-      desktop:
-        "/assets/product-zx9-speaker/desktop/image-category-page-preview.jpg",
-    },
-    new: true,
-    description:
-      "Upgrade your sound system with the all new ZX9 active speaker. It's a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
-  },
-  {
-    id: 5,
-    slug: "zx7-speaker",
-    name: "ZX7 Speaker",
-    categoryImage: {
-      mobile:
-        "/assets/product-zx7-speaker/mobile/image-category-page-preview.jpg",
-      tablet:
-        "/assets/product-zx7-speaker/tablet/image-category-page-preview.jpg",
-      desktop:
-        "/assets/product-zx7-speaker/desktop/image-category-page-preview.jpg",
-    },
-    new: false,
-    description:
-      "Stream high quality sound wirelessly with minimal to no loss. The ZX7 speaker uses high-end audiophile components that represents the top of the line powered speakers for home or studio use.",
-  },
-];
+import { getProductsByCategory, type Product } from "@/lib/products";
 
 const SpeakersPage = () => {
+  const speakers = getProductsByCategory("speakers");
+
   return (
     <div>
       {/* Navigation */}
@@ -81,7 +48,7 @@ const SpeakersPage = () => {
 };
 
 interface ProductCardProps {
-  product: (typeof speakers)[0];
+  product: Product;
   reverse: boolean;
 }
 

@@ -5,28 +5,11 @@ import Footer from "@/components/shared/Footer";
 import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
 import Button from "@/components/button";
-
-// Earphones data from db.json
-const earphones = [
-  {
-    id: 1,
-    slug: "yx1-earphones",
-    name: "YX1 Wireless Earphones",
-    categoryImage: {
-      mobile:
-        "/assets/product-yx1-earphones/mobile/image-category-page-preview.jpg",
-      tablet:
-        "/assets/product-yx1-earphones/tablet/image-category-page-preview.jpg",
-      desktop:
-        "/assets/product-yx1-earphones/desktop/image-category-page-preview.jpg",
-    },
-    new: true,
-    description:
-      "Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.",
-  },
-];
+import { getProductsByCategory, type Product } from "@/lib/products";
 
 const EarphonesPage = () => {
+  const earphones = getProductsByCategory("earphones");
+
   return (
     <div>
       {/* Navigation */}
@@ -65,7 +48,7 @@ const EarphonesPage = () => {
 };
 
 interface ProductCardProps {
-  product: (typeof earphones)[0];
+  product: Product;
   reverse: boolean;
 }
 
