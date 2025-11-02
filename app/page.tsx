@@ -1,6 +1,7 @@
 import Categories from "@/components/home/Categories";
 import HeroSection from "@/components/home/Hero";
 import NavBar from "@/components/shared/NavBar";
+import Footer from "@/components/shared/Footer";
 
 const Home = () => {
   return (
@@ -18,8 +19,9 @@ const Home = () => {
         {/* featured speaker2 */}
         {/* featured earphone1 */}
         {/* featured earphone2 */}
-        {/* Footer component */}
       </section>
+      {/* Footer component */}
+      <Footer />
     </div>
   );
 };
