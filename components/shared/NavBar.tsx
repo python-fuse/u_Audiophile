@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
-const NavBar = () => {
+const NavBar = ({ className = "" }: { className: string }) => {
   return (
-    <header className="bg-black h-[76px] flex items-center px-[165px] lg:justify-between border-b border-white/10">
+    <header
+      className={`bg-black h-[76px] flex items-center container-p justify-between border-b border-white/20 ${className}`}
+    >
       {/* title link */}
       <Link href="/">
         <Image
@@ -15,7 +16,8 @@ const NavBar = () => {
           height={25}
         />
       </Link>
-      <nav>
+
+      <nav className="hidden lg:block">
         <ul className="flex gap-8 text-white font-bold text-sm uppercase">
           <li className="duration-300 hover:text-primary">
             <Link href="/">Home</Link>
