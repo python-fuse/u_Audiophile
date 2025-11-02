@@ -38,15 +38,24 @@ body {
   @apply px-6 md:px-[39px] lg:px-[165px];
 }
 
-/* H1 - Manrope Bold - 56px */
+/* H1 - Manrope Bold - 56px (desktop), 36px (mobile) */
 h1,
 .h1 {
   font-family: "Manrope", sans-serif;
   font-weight: 700;
-  font-size: 56px;
-  line-height: 58px;
-  letter-spacing: 2px;
+  font-size: 36px;
+  line-height: 40px;
+  letter-spacing: 1.29px;
   text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  h1,
+  .h1 {
+    font-size: 56px;
+    line-height: 58px;
+    letter-spacing: 2px;
+  }
 }
 
 /* H2 - Manrope Bold - 40px */

@@ -10,12 +10,13 @@ const HeroSection = () => {
     >
       {/* Highlight product */}
       <div
-        className={`${styles.heroContent} text-white flex flex-col lg:w-[398px] lg:h-[346px] gap-y-6`}
+        className={`${styles.heroContent} text-white flex flex-col items-center lg:items-start text-center lg:text-left lg:w-[398px] lg:h-[346px] gap-y-6`}
       >
         <p className="overlined uppercase">New product</p>
 
         <h1>xx99 mark II headphones</h1>
-        <p>
+
+        <p className="md:max-w-[349px]">
           Experience natural, lifelike audio and exceptional build quality made
           for the passionate music enthusiast.
         </p>
