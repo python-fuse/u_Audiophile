@@ -14,17 +14,20 @@ const RadioInput: React.FC<RadioInputProps> = ({
   onSelect,
 }) => {
   return (
-    <div className="flex px-3 py-2 w-[309px] max-h-[81px] rounded items-center justify-start border border-primary">
+    <div className="flex px-4 py-[18px] w-full rounded-lg items-center justify-start border border-gray-300 hover:border-primary focus-within:border-primary transition-colors">
       <input
         type="radio"
         name={label}
         id={id}
         checked={isActive}
         onChange={onSelect}
-        className="accent-primary"
+        className="accent-primary w-5 h-5"
       />
 
-      <label htmlFor={id} className=" text-black font-bold text-[14px] ml-4">
+      <label
+        htmlFor={id}
+        className=" text-black font-bold text-[14px] ml-4 cursor-pointer"
+      >
         {label}
       </label>
     </div>
