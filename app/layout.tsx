@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -10,7 +11,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "audiophile",
+  title: "Audiophile",
   description: "Your one-stop shop for high-quality audio gear",
 };
 
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${manrope.variable} antialiased`}>
-        <CartProvider>{children}</CartProvider>
+        <ConvexClientProvider>
+          <CartProvider>{children}</CartProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   );
