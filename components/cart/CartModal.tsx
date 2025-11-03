@@ -2,62 +2,25 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../button";
-
-interface CartItem {
-  id: number;
-  slug: string;
-  name: string;
-  shortName: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import { useCart } from "@/contexts/CartContext";
 
 interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-// Hardcoded cart items for now - will be replaced with global state later
-const cartItems: CartItem[] = [
-  {
-    id: 4,
-    slug: "xx99-mark-two-headphones",
-    name: "XX99 Mark II Headphones",
-    shortName: "XX99 MK II",
-    price: 2999,
-    quantity: 1,
-    image: "/assets/product-xx99-mark-two-headphones/mobile/image-product.jpg",
-  },
-  {
-    id: 2,
-    slug: "xx59-headphones",
-    name: "XX59 Headphones",
-    shortName: "XX59",
-    price: 899,
-    quantity: 2,
-    image: "/assets/product-xx59-headphones/mobile/image-product.jpg",
-  },
-  {
-    id: 1,
-    slug: "yx1-earphones",
-    name: "YX1 Wireless Earphones",
-    shortName: "YX1",
-    price: 599,
-    quantity: 1,
-    image: "/assets/product-yx1-earphones/mobile/image-product.jpg",
-  },
-];
-
 const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
+  const { items, updateQuantity, clearCart, getSubtotal, getItemCount } =
+    useCart();
+
   if (!isOpen) return null;
 
-  const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const totalPrice = getSubtotal();
+  const totalItems = getItemCount();
 
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const handleRemoveAll = () => {
+    clearCart();
+  };
 
   return (
     <>
@@ -71,21 +34,22 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
           <h6 className="text-[18px]">CART ({totalItems})</h6>
           <button
             className="text-[15px] text-black/50 underline hover:text-primary"
-            onClick={() => {
-              // Will handle remove all logic later
-              console.log("Remove all items");
-            }}
+            onClick={handleRemoveAll}
           >
             Remove all
           </button>
         </div>
 
         {/* Cart Items */}
-        {cartItems.length > 0 ? (
+        {items.length > 0 ? (
           <>
             <div className="space-y-6 mb-8">
-              {cartItems.map((item) => (
-                <CartItemRow key={item.id} item={item} />
+              {items.map((item) => (
+                <CartItemRow
+                  key={item.id}
+                  item={item}
+                  onUpdateQuantity={updateQuantity}
+                />
               ))}
             </div>
 
@@ -111,10 +75,29 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
 };
 
 interface CartItemRowProps {
-  item: CartItem;
+  item: {
+    id: number;
+    name: string;
+    shortName: string;
+    price: number;
+    quantity: number;
+    image: string;
+  };
+  onUpdateQuantity: (id: number, quantity: number) => void;
 }
 
-const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
+const CartItemRow: React.FC<CartItemRowProps> = ({
+  item,
+  onUpdateQuantity,
+}) => {
+  const handleIncrement = () => {
+    onUpdateQuantity(item.id, item.quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    onUpdateQuantity(item.id, item.quantity - 1);
+  };
+
   return (
     <div className="flex items-center gap-4">
       {/* Product Image */}
@@ -134,10 +117,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
       <div className="flex items-center bg-light h-8 w-24">
         <button
           className="w-8 h-full text-black/25 hover:text-primary font-bold text-[13px]"
-          onClick={() => {
-            // Will handle decrement later
-            console.log("Decrement", item.id);
-          }}
+          onClick={handleDecrement}
         >
           -
         </button>
@@ -146,10 +126,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
         </span>
         <button
           className="w-8 h-full text-black/25 hover:text-primary font-bold text-[13px]"
-          onClick={() => {
-            // Will handle increment later
-            console.log("Increment", item.id);
-          }}
+          onClick={handleIncrement}
         >
           +
         </button>

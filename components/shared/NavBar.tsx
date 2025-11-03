@@ -4,10 +4,14 @@ import Link from "next/link";
 import { useState } from "react";
 import CartModal from "../cart/CartModal";
 import Categories from "../home/Categories";
+import { useCart } from "@/contexts/CartContext";
 
 const NavBar = ({ className = "" }: { className?: string }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { getItemCount } = useCart();
+
+  const itemCount = getItemCount();
 
   return (
     <>
@@ -61,7 +65,11 @@ const NavBar = ({ className = "" }: { className?: string }) => {
         </nav>
 
         {/* cart */}
-        <button onClick={() => setIsCartOpen(!isCartOpen)}>
+        <button
+          onClick={() => setIsCartOpen(!isCartOpen)}
+          className="relative"
+          aria-label="Shopping cart"
+        >
           <Image
             src={"/assets/carts.svg"}
             alt="cart"
@@ -69,6 +77,11 @@ const NavBar = ({ className = "" }: { className?: string }) => {
             height={20}
             className="duration-300 hover:text-primary"
           />
+          {itemCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {itemCount}
+            </span>
+          )}
         </button>
       </header>
 

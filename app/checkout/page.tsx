@@ -8,39 +8,13 @@ import TextField from "@/components/form/TextField";
 import RadioInput from "@/components/form/RadioInput";
 import Button from "@/components/button";
 import CheckoutSuccessModal from "@/components/checkout/CheckoutSuccessModal";
-
-// Hardcoded cart items - will be replaced with global state later
-const cartItems = [
-  {
-    id: 4,
-    slug: "xx99-mark-two-headphones",
-    name: "XX99 Mark II Headphones",
-    shortName: "XX99 MK II",
-    price: 2999,
-    quantity: 1,
-    image: "/assets/product-xx99-mark-two-headphones/mobile/image-product.jpg",
-  },
-  {
-    id: 2,
-    slug: "xx59-headphones",
-    name: "XX59 Headphones",
-    shortName: "XX59",
-    price: 899,
-    quantity: 2,
-    image: "/assets/product-xx59-headphones/mobile/image-product.jpg",
-  },
-  {
-    id: 1,
-    slug: "yx1-earphones",
-    name: "YX1 Wireless Earphones",
-    shortName: "YX1",
-    price: 599,
-    quantity: 1,
-    image: "/assets/product-yx1-earphones/mobile/image-product.jpg",
-  },
-];
+import { useCart } from "@/contexts/CartContext";
+import { validateCheckoutForm, type FormErrors } from "@/lib/validation";
 
 const CheckoutPage = () => {
+  const { items, getSubtotal, getShipping, getVAT, getGrandTotal, clearCart } =
+    useCart();
+
   // Form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,24 +23,181 @@ const CheckoutPage = () => {
   const [zipCode, setZipCode] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("e-money");
+  const [paymentMethod, setPaymentMethod] = useState<"e-money" | "cash">(
+    "e-money"
+  );
   const [eMoneyNumber, setEMoneyNumber] = useState("");
   const [eMoneyPin, setEMoneyPin] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  // Calculate totals
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const shipping = 50;
-  const vat = Math.round(subtotal * 0.2); // 20% VAT
-  const grandTotal = subtotal + shipping;
+  // Validation errors
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Calculate totals from cart
+  const subtotal = getSubtotal();
+  const shipping = getShipping();
+  const vat = getVAT();
+  const grandTotal = getGrandTotal();
+
+  const handleBlur = (fieldName: string) => {
+    setTouched((prev) => ({ ...prev, [fieldName]: true }));
+
+    // Validate specific field on blur
+    validateField(fieldName);
+  };
+
+  const validateField = (fieldName: string) => {
+    const newErrors = { ...errors };
+
+    switch (fieldName) {
+      case "name":
+        if (!name.trim()) {
+          newErrors.name = "Name is required";
+        } else {
+          delete newErrors.name;
+        }
+        break;
+      case "email":
+        if (!email.trim()) {
+          newErrors.email = "Email is required";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          newErrors.email = "Wrong format";
+        } else {
+          delete newErrors.email;
+        }
+        break;
+      case "phone":
+        if (!phone.trim()) {
+          newErrors.phone = "Phone is required";
+        } else if (phone.replace(/\D/g, "").length < 10) {
+          newErrors.phone = "Wrong format";
+        } else {
+          delete newErrors.phone;
+        }
+        break;
+      case "address":
+        if (!address.trim()) {
+          newErrors.address = "Address is required";
+        } else {
+          delete newErrors.address;
+        }
+        break;
+      case "zipCode":
+        if (!zipCode.trim()) {
+          newErrors.zipCode = "ZIP code is required";
+        } else if (zipCode.trim().length < 3) {
+          newErrors.zipCode = "Wrong format";
+        } else {
+          delete newErrors.zipCode;
+        }
+        break;
+      case "city":
+        if (!city.trim()) {
+          newErrors.city = "City is required";
+        } else {
+          delete newErrors.city;
+        }
+        break;
+      case "country":
+        if (!country.trim()) {
+          newErrors.country = "Country is required";
+        } else {
+          delete newErrors.country;
+        }
+        break;
+      case "eMoneyNumber":
+        if (paymentMethod === "e-money") {
+          if (!eMoneyNumber.trim()) {
+            newErrors.eMoneyNumber = "e-Money number is required";
+          } else {
+            const digitsOnly = eMoneyNumber.replace(/\s/g, "");
+            if (!/^\d+$/.test(digitsOnly) || digitsOnly.length < 9) {
+              newErrors.eMoneyNumber = "Wrong format";
+            } else {
+              delete newErrors.eMoneyNumber;
+            }
+          }
+        }
+        break;
+      case "eMoneyPin":
+        if (paymentMethod === "e-money") {
+          if (!eMoneyPin.trim()) {
+            newErrors.eMoneyPin = "PIN is required";
+          } else if (!/^\d{4}$/.test(eMoneyPin)) {
+            newErrors.eMoneyPin = "Wrong format";
+          } else {
+            delete newErrors.eMoneyPin;
+          }
+        }
+        break;
+    }
+
+    setErrors(newErrors);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check if cart is empty
+    if (items.length === 0) {
+      alert("Your cart is empty. Please add items before checkout.");
+      return;
+    }
+
+    // Validate form
+    const validationResult = validateCheckoutForm({
+      name,
+      email,
+      phone,
+      address,
+      zipCode,
+      city,
+      country,
+      paymentMethod,
+      eMoneyNumber: paymentMethod === "e-money" ? eMoneyNumber : undefined,
+      eMoneyPin: paymentMethod === "e-money" ? eMoneyPin : undefined,
+    });
+
+    if (!validationResult.isValid) {
+      setErrors(validationResult.errors);
+      // Mark all fields as touched to show errors
+      setTouched({
+        name: true,
+        email: true,
+        phone: true,
+        address: true,
+        zipCode: true,
+        city: true,
+        country: true,
+        eMoneyNumber: true,
+        eMoneyPin: true,
+      });
+      return;
+    }
+
+    // Clear errors if validation passes
+    setErrors({});
+
     // Show success modal
     setShowSuccessModal(true);
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    // Clear cart after successful checkout
+    clearCart();
+    // Reset form
+    setName("");
+    setEmail("");
+    setPhone("");
+    setAddress("");
+    setZipCode("");
+    setCity("");
+    setCountry("");
+    setEMoneyNumber("");
+    setEMoneyPin("");
+    setTouched({});
   };
 
   return (
@@ -97,19 +228,25 @@ const CheckoutPage = () => {
                     label="Name"
                     value={name}
                     onChange={setName}
-                    errorMsg=""
+                    onBlur={() => handleBlur("name")}
+                    errorMsg={touched.name ? errors.name : ""}
+                    placeholder="Alexei Ward"
                   />
                   <TextField
                     label="Email Address"
                     value={email}
                     onChange={setEmail}
-                    errorMsg=""
+                    onBlur={() => handleBlur("email")}
+                    errorMsg={touched.email ? errors.email : ""}
+                    placeholder="alexei@mail.com"
                   />
                   <TextField
                     label="Phone Number"
                     value={phone}
                     onChange={setPhone}
-                    errorMsg=""
+                    onBlur={() => handleBlur("phone")}
+                    errorMsg={touched.phone ? errors.phone : ""}
+                    placeholder="+1 202-555-0136"
                   />
                 </div>
               </div>
@@ -124,27 +261,35 @@ const CheckoutPage = () => {
                     label="Address"
                     value={address}
                     onChange={setAddress}
-                    errorMsg=""
+                    onBlur={() => handleBlur("address")}
+                    errorMsg={touched.address ? errors.address : ""}
+                    placeholder="1137 Williams Avenue"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
                     <TextField
                       label="ZIP Code"
                       value={zipCode}
                       onChange={setZipCode}
-                      errorMsg=""
+                      onBlur={() => handleBlur("zipCode")}
+                      errorMsg={touched.zipCode ? errors.zipCode : ""}
+                      placeholder="10001"
                     />
                     <TextField
                       label="City"
                       value={city}
                       onChange={setCity}
-                      errorMsg=""
+                      onBlur={() => handleBlur("city")}
+                      errorMsg={touched.city ? errors.city : ""}
+                      placeholder="New York"
                     />
                   </div>
                   <TextField
                     label="Country"
                     value={country}
                     onChange={setCountry}
-                    errorMsg=""
+                    onBlur={() => handleBlur("country")}
+                    errorMsg={touched.country ? errors.country : ""}
+                    placeholder="United States"
                   />
                 </div>
               </div>
@@ -181,13 +326,20 @@ const CheckoutPage = () => {
                         label="e-Money Number"
                         value={eMoneyNumber}
                         onChange={setEMoneyNumber}
-                        errorMsg=""
+                        onBlur={() => handleBlur("eMoneyNumber")}
+                        errorMsg={
+                          touched.eMoneyNumber ? errors.eMoneyNumber : ""
+                        }
+                        placeholder="238521993"
                       />
                       <TextField
                         label="e-Money PIN"
                         value={eMoneyPin}
                         onChange={setEMoneyPin}
-                        errorMsg=""
+                        onBlur={() => handleBlur("eMoneyPin")}
+                        errorMsg={touched.eMoneyPin ? errors.eMoneyPin : ""}
+                        placeholder="6891"
+                        type="password"
                       />
                     </>
                   )}
@@ -220,7 +372,7 @@ const CheckoutPage = () => {
 
               {/* Cart Items */}
               <div className="space-y-6 mb-8">
-                {cartItems.map((item) => (
+                {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-4">
                     <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-light shrink-0">
                       <Image
@@ -293,8 +445,8 @@ const CheckoutPage = () => {
       {/* Success Modal */}
       <CheckoutSuccessModal
         isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        cartItems={cartItems}
+        onClose={handleCloseSuccessModal}
+        cartItems={items}
         grandTotal={grandTotal}
       />
     </div>

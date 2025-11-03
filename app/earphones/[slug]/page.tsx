@@ -6,6 +6,7 @@ import Footer from "@/components/shared/Footer";
 import Categories from "@/components/home/Categories";
 import AboutSection from "@/components/home/AboutSection";
 import Button from "@/components/button";
+import AddToCart from "@/components/product/AddToCart";
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products";
 
 interface ProductPageProps {
@@ -77,20 +78,7 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
                 $ {product.price.toLocaleString()}
               </p>
 
-              <div className="flex gap-4">
-                <div className="flex items-center bg-light h-12 w-[120px]">
-                  <button className="w-10 h-full text-black/25 hover:text-primary font-bold">
-                    -
-                  </button>
-                  <span className="flex-1 text-center font-bold text-[13px]">
-                    1
-                  </span>
-                  <button className="w-10 h-full text-black/25 hover:text-primary font-bold">
-                    +
-                  </button>
-                </div>
-                <Button>Add to Cart</Button>
-              </div>
+              <AddToCart product={product} />
             </div>
           </div>
         </section>
