@@ -33,13 +33,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert relative image URLs to absolute URLs
+    const baseUrl =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      process.env.VERCEL_URL ||
+      "http://localhost:3000";
+
+    const itemsWithAbsoluteUrls = items.map((item: any) => ({
+      ...item,
+      image: item.image.startsWith("http")
+        ? item.image
+        : `${baseUrl}${item.image}`,
+    }));
+
     // Generate HTML email
     const emailHTML = generateOrderConfirmationHTML({
       orderNumber,
       customerName,
       customerEmail,
       orderDate,
-      items,
+      items: itemsWithAbsoluteUrls,
       subtotal,
       shipping,
       vat,
