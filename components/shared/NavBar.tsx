@@ -95,7 +95,7 @@ const NavBar = ({ className = "" }: { className?: string }) => {
           />
 
           {/* Menu Content */}
-          <div className="fixed top-[76px] left-0 right-0 bg-white z-40 lg:hidden rounded-b-lg">
+          <div className="fixed top-[76px] left-0 right-0 bg-white z-40 lg:hidden rounded-b-lg max-h-[calc(100vh-76px)] overflow-y-auto">
             <div className="container-p py-8 md:py-14">
               <div onClick={() => setIsMobileMenuOpen(false)}>
                 <Categories />
