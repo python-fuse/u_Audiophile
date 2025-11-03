@@ -118,7 +118,7 @@ const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
   return (
     <div className="flex items-center gap-4">
       {/* Product Image */}
-      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-light flex-shrink-0">
+      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-light shrink-0">
         <Image src={item.image} alt={item.name} fill className="object-cover" />
       </div>
 

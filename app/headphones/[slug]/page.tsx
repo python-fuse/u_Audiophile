@@ -35,13 +35,13 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
       <div className="container-p">
         <Link
           href={`/${product.category}`}
-          className="inline-block text-black/50 hover:text-primary transition-colors mt-[16px] md:mt-[33px] lg:mt-[79px] mb-6 md:mb-6 lg:mb-[56px]"
+          className="inline-block text-black/50 hover:text-primary transition-colors mt-4 md:mt-[33px] lg:mt-[79px] mb-6 md:mb-6 lg:mb-14"
         >
           Go Back
         </Link>
 
         {/* Product Overview */}
-        <section className="mb-[88px] md:mb-[120px] lg:mb-[160px]">
+        <section className="mb-[88px] md:mb-[120px] lg:mb-40">
           <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 md:gap-[69px] lg:gap-[125px]">
             <div className="relative w-full lg:flex-1 h-[327px] md:h-[480px] lg:h-[560px] rounded-lg overflow-hidden bg-light shrink-0">
               <Image
@@ -97,9 +97,9 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
         </section>
 
         {/* Features and In The Box */}
-        <section className="mb-[88px] md:mb-[120px] lg:mb-[160px]">
+        <section className="mb-[88px] md:mb-[120px] lg:mb-40">
           <div className="flex flex-col lg:flex-row gap-[88px] md:gap-[120px] lg:gap-[125px]">
-            <div className="lg:flex-[2]">
+            <div className="lg:flex-2">
               <h3 className="mb-6 md:mb-8">Features</h3>
               <div className="text-black/50 whitespace-pre-line">
                 {product.features}
@@ -123,7 +123,7 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
         </section>
 
         {/* Gallery */}
-        <section className="mb-[120px] md:mb-[120px] lg:mb-[160px]">
+        <section className="mb-[120px] md:mb-[120px] lg:mb-40">
           <div className="grid grid-cols-1 md:grid-cols-[40%_60%] gap-5 md:gap-[18px] lg:gap-[30px]">
             <div className="flex flex-col gap-5 md:gap-[18px] lg:gap-[30px]">
               <div className="relative h-[174px] md:h-[174px] lg:h-[280px] rounded-lg overflow-hidden">
@@ -192,11 +192,11 @@ const ProductDetailPage = async ({ params }: ProductPageProps) => {
         </section>
 
         {/* You May Also Like */}
-        <section className="mb-[120px] md:mb-[120px] lg:mb-[160px]">
-          <h3 className="text-center mb-10 md:mb-[56px] lg:mb-16">
+        <section className="mb-[120px] md:mb-[120px] lg:mb-40">
+          <h3 className="text-center mb-10 md:mb-14 lg:mb-16">
             You may also like
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[56px] md:gap-[11px] lg:gap-[30px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-[11px] lg:gap-[30px]">
             {product.others.map((item) => (
               <div key={item.slug} className="flex flex-col items-center">
                 <div className="relative w-full h-[120px] md:h-[318px] rounded-lg overflow-hidden bg-light mb-8 md:mb-10">

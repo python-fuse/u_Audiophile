@@ -16,7 +16,7 @@ const EarphonesPage = () => {
       <NavBar className="" />
 
       {/* Category Hero */}
-      <section className="bg-dark h-48 md:h-[246px] flex items-center justify-center">
+      <section className="bg-black h-48 md:h-[246px] flex items-center justify-center">
         <h2 className="text-white">EARPHONES</h2>
       </section>
 

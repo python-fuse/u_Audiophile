@@ -12,9 +12,9 @@ const FeaturedZX9 = () => {
         {/* Pattern circles background */}
         <div className={styles.pattern} />
 
-        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-[138px] py-[55px] md:py-[64px] lg:py-[96px] px-6 md:px-[95px] lg:px-[95px]">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-8 lg:gap-[138px] py-[55px] md:py-16 lg:py-24 px-6 md:px-[95px] lg:px-[95px]">
           {/* Product Image */}
-          <div className={`${styles.imageWrapper} flex-shrink-0`}>
+          <div className={`${styles.imageWrapper} shrink-0`}>
             <Image
               src="/assets/home/desktop/image-speaker-zx9.png"
               alt="ZX9 Speaker"

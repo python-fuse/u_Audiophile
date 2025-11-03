@@ -6,7 +6,7 @@ const FeaturedZX7 = () => {
   return (
     <section className={`${styles.featured} container-p`}>
       <div
-        className={`${styles.container} rounded-lg overflow-hidden relative h-[320px] flex items-center`}
+        className={`${styles.container} rounded-lg overflow-hidden relative h-80 flex items-center`}
       >
         {/* Background image handled in CSS */}
 

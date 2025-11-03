@@ -16,27 +16,29 @@ const HeadphonesPage = () => {
       <NavBar className="" />
 
       {/* Category Hero */}
-      <section className="bg-dark h-[192px] md:h-[246px] flex items-center justify-center">
-        <h2 className="text-white">HEADPHONES</h2>
-      </section>
+      <div className="bg-black h-48 flex items-center justify-center">
+        <h2 className="text-white uppercase">HEADPHONES</h2>
+      </div>
 
-      {/* Product List */}
-      <section className="container-p py-16 md:py-[120px] lg:py-[160px]">
-        <div className="flex flex-col gap-[120px] md:gap-[120px] lg:gap-[160px]">
-          {headphones.map((product, index) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              reverse={index % 2 !== 0}
-            />
-          ))}
-        </div>
-      </section>
+      <div className="container-p">
+        {/* Products List */}
+        <section className="py-16 md:py-[120px] lg:py-40">
+          <div className="flex flex-col gap-[120px] md:gap-[120px] lg:gap-40">
+            {headphones.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                reverse={index % 2 !== 0}
+              />
+            ))}
+          </div>
+        </section>
 
-      {/* Category Cards */}
-      <section className="container-p pb-[120px] md:pb-[96px] lg:pb-[120px]">
-        <Categories />
-      </section>
+        {/* Category Cards */}
+        <section className="py-[120px] md:pb-24 lg:pb-[120px]">
+          <Categories />
+        </section>
+      </div>
 
       {/* About Section */}
       <AboutSection />
@@ -60,7 +62,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, reverse }) => {
       }`}
     >
       {/* Product Image */}
-      <div className="relative w-full lg:flex-1 h-[352px] md:h-[352px] lg:h-[560px] rounded-lg overflow-hidden bg-light flex-shrink-0">
+      <div className="relative w-full lg:flex-1 h-[352px] md:h-[352px] lg:h-[560px] rounded-lg overflow-hidden bg-light shrink-0">
         <Image
           src={product.categoryImage.mobile}
           alt={product.name}

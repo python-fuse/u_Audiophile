@@ -55,7 +55,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-[500%] hover:hue-rotate-[350deg]"
+              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-500 hover:hue-rotate-350"
             >
               <Image
                 src="/assets/shared/desktop/icon-facebook.svg"
@@ -68,7 +68,7 @@ const Footer = () => {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-[500%] hover:hue-rotate-[350deg]"
+              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-500 hover:hue-rotate-350"
             >
               <Image
                 src="/assets/shared/desktop/icon-twitter.svg"
@@ -81,7 +81,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-[500%] hover:hue-rotate-[350deg]"
+              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-500 hover:hue-rotate-350"
             >
               <Image
                 src="/assets/shared/desktop/icon-instagram.svg"
@@ -106,7 +106,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-[500%] hover:hue-rotate-[350deg]"
+              className="duration-300 hover:brightness-0 hover:invert hover:sepia hover:saturate-500 hover:hue-rotate-350"
             >
               <Image
                 src="/assets/shared/desktop/icon-facebook.svg"

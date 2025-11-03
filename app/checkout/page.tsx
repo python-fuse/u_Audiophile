@@ -82,7 +82,7 @@ const CheckoutPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-[30px]">
             {/* Checkout Form */}
-            <div className="flex-1 bg-white rounded-lg p-6 md:p-[48px]">
+            <div className="flex-1 bg-white rounded-lg p-6 md:p-12">
               <h3 className="mb-8 md:mb-[41px]">CHECKOUT</h3>
 
               {/* Billing Details */}
@@ -193,7 +193,7 @@ const CheckoutPage = () => {
 
                 {paymentMethod === "cash" && (
                   <div className="mt-8 flex gap-8">
-                    <div className="flex-shrink-0">
+                    <div className="shrink-0">
                       <Image
                         src="/assets/checkout/icon-cash-on-delivery.svg"
                         alt=""
@@ -220,7 +220,7 @@ const CheckoutPage = () => {
               <div className="space-y-6 mb-8">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex items-center gap-4">
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-light flex-shrink-0">
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-light shrink-0">
                       <Image
                         src={item.image}
                         alt={item.name}

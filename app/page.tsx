@@ -18,7 +18,7 @@ const Home = () => {
       <HeroSection />
 
       {/* categories component */}
-      <section className="container-p py-[120px] md:py-[96px] lg:py-[120px]">
+      <section className="container-p py-[120px] md:py-24 lg:py-[120px]">
         <Categories />
       </section>
 
