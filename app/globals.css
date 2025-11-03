@@ -151,7 +151,7 @@ p,
 }
 
 button {
-  @apply cursor-pointer uppercase font-bold;
+  @apply cursor-pointer uppercase font-bold duration-300 ease-in-out transition-all;
 }
 
 .primary {
@@ -164,4 +164,8 @@ button.outlined {
 
 button.text-icon {
   @apply w-[57.32px] h-[18px] text-[13px] flex justify-between items-center text-black/50 hover:text-primary;
+}
+
+button#zx9 {
+  @apply bg-black text-white  w-40 h-12 hover:bg-[#4C4C4C];
 }
