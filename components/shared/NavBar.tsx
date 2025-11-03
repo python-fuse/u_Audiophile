@@ -3,17 +3,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import CartModal from "../cart/CartModal";
+import Categories from "../home/Categories";
 
 const NavBar = ({ className = "" }: { className?: string }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
       <header
-        className={`bg-black h-[76px] flex items-center container-p justify-between border-b border-white/20 ${className}`}
+        className={`bg-black h-[76px] flex items-center container-p justify-between border-b border-white/20 relative z-50 ${className}`}
       >
-        {/* title link */}
-        <Link href="/">
+        {/* Left side - Hamburger (mobile/tablet) */}
+        <button
+          className="lg:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <Image
+            src="/assets/shared/tablet/icon-hamburger.svg"
+            alt="Menu"
+            width={16}
+            height={15}
+          />
+        </button>
+
+        {/* Logo - Centered on tablet, left on mobile & desktop */}
+        <Link
+          href="/"
+          className="md:absolute md:left-1/2 md:-translate-x-1/2 lg:static lg:transform-none"
+        >
           <Image
             src={"/assets/logo.svg"}
             alt="Audiophile logo"
@@ -23,7 +42,8 @@ const NavBar = ({ className = "" }: { className?: string }) => {
           />
         </Link>
 
-        <nav className="hidden lg:block">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:block absolute left-1/2 -translate-x-1/2">
           <ul className="flex gap-8 text-white font-bold text-sm uppercase">
             <li className="duration-300 hover:text-primary">
               <Link href="/">Home</Link>
@@ -51,6 +71,26 @@ const NavBar = ({ className = "" }: { className?: string }) => {
           />
         </button>
       </header>
+
+      {/* Mobile/Tablet Menu */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+
+          {/* Menu Content */}
+          <div className="fixed top-[76px] left-0 right-0 bg-white z-40 lg:hidden rounded-b-lg">
+            <div className="container-p py-8 md:py-14">
+              <div onClick={() => setIsMobileMenuOpen(false)}>
+                <Categories />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Cart Modal */}
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
