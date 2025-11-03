@@ -7,6 +7,7 @@ import Footer from "@/components/shared/Footer";
 import TextField from "@/components/form/TextField";
 import RadioInput from "@/components/form/RadioInput";
 import Button from "@/components/button";
+import CheckoutSuccessModal from "@/components/checkout/CheckoutSuccessModal";
 
 // Hardcoded cart items - will be replaced with global state later
 const cartItems = [
@@ -51,6 +52,7 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("e-money");
   const [eMoneyNumber, setEMoneyNumber] = useState("");
   const [eMoneyPin, setEMoneyPin] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   // Calculate totals
   const subtotal = cartItems.reduce(
@@ -63,8 +65,8 @@ const CheckoutPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Will handle form submission later
-    console.log("Form submitted");
+    // Show success modal
+    setShowSuccessModal(true);
   };
 
   return (
@@ -287,6 +289,14 @@ const CheckoutPage = () => {
       </div>
 
       <Footer />
+
+      {/* Success Modal */}
+      <CheckoutSuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        cartItems={cartItems}
+        grandTotal={grandTotal}
+      />
     </div>
   );
 };
