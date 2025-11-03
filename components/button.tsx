@@ -12,10 +12,17 @@ const Button: React.FC<ButtonProps> = ({
   className = "",
   variant = "primary",
   children,
+  disabled,
   ...props
 }) => {
   return (
-    <button className={`${className} ${variant} w-40 h-12 `} {...props}>
+    <button
+      className={`${className} ${variant} w-40 h-12 ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+      disabled={disabled}
+      {...props}
+    >
       {children}
 
       {variant == "text-icon" && <ChevronRight className="text-primary " />}

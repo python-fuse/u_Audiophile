@@ -10,10 +10,14 @@ import Button from "@/components/button";
 import CheckoutSuccessModal from "@/components/checkout/CheckoutSuccessModal";
 import { useCart } from "@/contexts/CartContext";
 import { validateCheckoutForm, type FormErrors } from "@/lib/validation";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const CheckoutPage = () => {
   const { items, getSubtotal, getShipping, getVAT, getGrandTotal, clearCart } =
     useCart();
+
+  const createOrder = useMutation(api.orders.createOrder);
 
   // Form state
   const [name, setName] = useState("");
@@ -29,6 +33,8 @@ const CheckoutPage = () => {
   const [eMoneyNumber, setEMoneyNumber] = useState("");
   const [eMoneyPin, setEMoneyPin] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Validation errors
   const [errors, setErrors] = useState<FormErrors>({});
@@ -136,7 +142,7 @@ const CheckoutPage = () => {
     setErrors(newErrors);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Check if cart is empty
@@ -179,8 +185,83 @@ const CheckoutPage = () => {
     // Clear errors if validation passes
     setErrors({});
 
-    // Show success modal
-    setShowSuccessModal(true);
+    // Set loading state
+    setIsSubmitting(true);
+
+    try {
+      // Step 1: Create order in Convex
+      const orderResult = await createOrder({
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        shippingAddress: address,
+        shippingCity: city,
+        shippingZipCode: zipCode,
+        shippingCountry: country,
+        paymentMethod,
+        items: items.map((item) => ({
+          id: item.id,
+          slug: item.slug,
+          name: item.name,
+          shortName: item.shortName,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+          category: item.category,
+        })),
+        subtotal,
+        shipping,
+        vat,
+        grandTotal,
+      });
+
+      // Step 2: Send confirmation email
+      const emailResponse = await fetch("/api/send-order-confirmation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderNumber: orderResult.orderNumber,
+          customerName: name,
+          customerEmail: email,
+          orderDate: new Date(orderResult.createdAt).toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }
+          ),
+          items,
+          subtotal,
+          shipping,
+          vat,
+          grandTotal,
+          shippingAddress: address,
+          shippingCity: city,
+          shippingZipCode: zipCode,
+          shippingCountry: country,
+          paymentMethod,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error("Failed to send confirmation email");
+        // Don't block the order if email fails
+      }
+
+      // Step 3: Store order number and show success modal
+      setOrderNumber(orderResult.orderNumber);
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error("Error creating order:", error);
+      alert(
+        "There was an error processing your order. Please try again or contact support."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCloseSuccessModal = () => {
@@ -432,8 +513,12 @@ const CheckoutPage = () => {
               </div>
 
               {/* Submit Button */}
-              <Button type="submit" className="w-full">
-                CONTINUE & PAY
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting || items.length === 0}
+              >
+                {isSubmitting ? "PROCESSING..." : "CONTINUE & PAY"}
               </Button>
             </div>
           </div>
@@ -448,6 +533,7 @@ const CheckoutPage = () => {
         onClose={handleCloseSuccessModal}
         cartItems={items}
         grandTotal={grandTotal}
+        orderNumber={orderNumber}
       />
     </div>
   );

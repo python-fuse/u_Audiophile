@@ -44,5 +44,5 @@ export default defineSchema({
   })
     .index("by_email", ["customerEmail"])
     .index("by_order_number", ["orderNumber"])
-    .index("by_creation_time", ["createdAt"]),
+    .index("by_created_at", ["createdAt"]),
 });

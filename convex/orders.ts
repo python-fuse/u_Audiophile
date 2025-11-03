@@ -111,7 +111,7 @@ export const getRecentOrders = query({
 
     const orders = await ctx.db
       .query("orders")
-      .withIndex("by_creation_time")
+      .withIndex("by_created_at")
       .order("desc")
       .take(limit);
 

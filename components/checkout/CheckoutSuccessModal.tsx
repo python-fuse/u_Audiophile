@@ -16,6 +16,7 @@ interface CheckoutSuccessModalProps {
   onClose: () => void;
   cartItems: CartItem[];
   grandTotal: number;
+  orderNumber?: string;
 }
 
 const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
@@ -23,6 +24,7 @@ const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
   onClose,
   cartItems,
   grandTotal,
+  orderNumber,
 }) => {
   if (!isOpen) return null;
 
@@ -60,6 +62,13 @@ const CheckoutSuccessModal: React.FC<CheckoutSuccessModalProps> = ({
             THANK YOU <br />
             FOR YOUR ORDER
           </h3>
+
+          {/* Order Number */}
+          {orderNumber && (
+            <p className="text-[15px] font-bold mb-2">
+              Order Number: <span className="text-primary">{orderNumber}</span>
+            </p>
+          )}
 
           {/* Subtitle */}
           <p className="text-black/50 text-[15px] leading-[25px] mb-6">
