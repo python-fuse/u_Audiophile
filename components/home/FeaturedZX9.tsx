@@ -50,7 +50,7 @@ const FeaturedZX9 = () => {
               Upgrade to premium speakers that are phenomenally built to deliver
               truly remarkable sound.
             </p>
-            <Link href="/speakers/zx9-speaker">
+            <Link href="/speakers/zx9-speaker" className="z-20">
               <button id="zx9" className=" hover:bg-[#4C4C4C] border-0">
                 See Product
               </button>
