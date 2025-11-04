@@ -95,7 +95,7 @@ export function generateOrderConfirmationHTML(
                 THANK YOU FOR YOUR ORDER
               </h2>
               <p style="font-size: 15px; color: #000000; opacity: 0.5; margin: 0;">
-                You will receive an email confirmation shortly
+                Your order has been received and is being processed.
               </p>
             </td>
           </tr>
@@ -241,9 +241,11 @@ export function generateOrderConfirmationHTML(
           <tr>
             <td style="padding: 0 32px 48px; text-align: center;">
               <a href="${
-                process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-              }" style="display: inline-block; background-color: #D87D4A; color: #ffffff; text-decoration: none; padding: 15px 32px; font-size: 13px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; border-radius: 0;">
-                CONTINUE SHOPPING
+                process.env.DEPLOYED_NETLIFY_URL || "http://localhost:3000"
+              }/orders/${
+    data.orderNumber
+  }" style="display: inline-block; background-color: #D87D4A; color: #ffffff; text-decoration: none; padding: 15px 32px; font-size: 13px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; border-radius: 0;">
+                VIEW YOUR ORDER
               </a>
             </td>
           </tr>

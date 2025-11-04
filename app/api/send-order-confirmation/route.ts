@@ -49,16 +49,28 @@ export async function POST(request: NextRequest) {
 
     // Convert relative image URLs to absolute URLs
     const baseUrl =
+      process.env.DEPLOYED_NETLIFY_URL ||
       process.env.NEXT_PUBLIC_APP_URL ||
       process.env.VERCEL_URL ||
       "http://localhost:3000";
 
-    const itemsWithAbsoluteUrls = items.map((item: any) => ({
-      ...item,
-      image: item.image.startsWith("http")
-        ? item.image
-        : `${baseUrl}${item.image}`,
-    }));
+    const itemsWithAbsoluteUrls = items.map((item: any) => {
+      let imageUrl = item.image;
+
+      // If image is already absolute, use as-is
+      if (imageUrl.startsWith("http")) {
+        return { ...item, image: imageUrl };
+      }
+
+      // Remove leading ./ or / if present
+      imageUrl = imageUrl.replace(/^\.?\//, "");
+
+      // Construct absolute URL
+      return {
+        ...item,
+        image: `${baseUrl}/${imageUrl}`,
+      };
+    });
 
     // Generate HTML email
     const emailHTML = generateOrderConfirmationHTML({
